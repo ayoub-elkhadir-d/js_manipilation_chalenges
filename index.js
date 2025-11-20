@@ -12,81 +12,183 @@ async function loadData() {
 }
 
 
-loadData();
+
 
 
 
 // CHALLENGE 1: Count how many destinations we have
 // RESTRICTION use Only for, while, and standard logic.
 function countTotalDestinations() {
-   
-    
+let legnth=0
+   for(data of Object.entries(spaceData)){
+   if(data[0]=="destinations"){
+    for(data_ of data[1]){
+        legnth++
+    }
+   }
+   }
+   return legnth
+  
 }
 
 // CHALLENGE 2: Find destinations that are available for booking
 // NO RESTRICTION You are encouraged to use map, filter, reduce, and Object.keys/Object.values/Object.entries where appropriate.
 function getAvailableDestinations() {
-
+    let a =[]
+   for(data of Object.entries(spaceData)){
+   if(data[0]=="destinations"){
+    for(data_ of data[1]){
+       
+        if(data_.available==true){
+           a.push(data_)
+        }
+    }
+   }
+   }
+    return a
 }
 
 // CHALLENGE 3: Get the very first booking in our system
 // RESTRICTION use Only for, while, and standard logic.
 function getFirstBooking() {
-
+for(data of Object.entries(spaceData)){
+   if(data[0]=="bookings"){
+    return data[1][1]
+   }
+   }
 }
 
 // CHALLENGE 4: Calculate how much money we've made from all bookings
 // NO RESTRICTION You are encouraged to use map, filter, reduce, and Object.keys/Object.values/Object.entries where appropriate.
 function calculateTotalRevenue() {
-
-
+    let sum =0
+  for(data of Object.entries(spaceData)){
+   if(data[0]=="bookings"){
+     for(data of data[1]){
+       sum+= data.totalPrice
+        
+     }
+   }
+   }
+   return sum
 }
 
 // CHALLENGE 5: Find a user by their email address
 // RESTRICTION use Only for, while, and standard logic.
 function findUserByEmail(email) {
    
-    
+for(data of Object.entries(spaceData)){
+   if(data[0]=="users"){
+     for(data of data[1]){
+       if(data.email==email){
+        return data
+        break
+       }
+        
+     }
+   }
+   }
 }
 
 // CHALLENGE 6: Count all passengers across every booking
 // RESTRICTION use Only for, while, and standard logic.
 function countTotalPassengers() {
-   
+    let sum=0
+for(data of Object.entries(spaceData)){
+   if(data[0]=="bookings"){
+     for(data of data[1]){
+         for(data of data.passengers)
+   sum++
+        
+     }
     
+   }
+   }
+  return sum 
 }
 
 // CHALLENGE 7: Group bookings by their status (confirmed, pending, etc.)
 // NO RESTRICTION You are encouraged to use map, filter, reduce, and Object.keys/Object.values/Object.entries where appropriate.
 function groupBookingsByStatus() {
-    // We want an object that looks like:
-    // {
-    //   confirmed: [booking1, booking2...],
-    //   pending: [booking3...]
-    // }
-   
+let confirmed=[]
+let pending=[]
+let cancelled=[]
+for(data of Object.entries(spaceData)){
+   if(data[0]=="bookings"){
+     for(data of data[1]){
+       if(data.status=="confirmed"){
+        confirmed.push(data)
+       }if(data.status=="pending"){
+        pending.push(data)
+       }
+       if(data.status=="cancelled"){
+        cancelled.push(data)
+       }
+ 
+        
+     }
+    
+   }
+   }
+return {
+    confirmed,pending,cancelled
+}
 }
 
 // CHALLENGE 8: Find the most expensive booking
 // RESTRICTION use Only for, while, and standard logic.
 function findMostExpensiveBooking() {
-    
-
+    let max =0;
+        for(data of Object.entries(spaceData)){
+   if(data[0]=="bookings"){
+     for(data of data[1]){
+         if(data.totalPrice>max){
+            max=data.totalPrice
+         }
+     }
+    }
+}
+return max
 }
 
 // CHALLENGE 9: Create a simple summary of all bookings
 // NO RESTRICTION You are encouraged to use map, filter, reduce, and Object.keys/Object.values/Object.entries where appropriate.
 function getBookingSummary() {
-    // We want to make each booking simpler - just show:
     // id, destination, number of passengers, and total price
+    let all_data=[]
+         for(data of Object.entries(spaceData)){
+   if(data[0]=="bookings"){
+     for(data of data[1]){
+        all_data.push({
+             "id":data.id,
+             "destination":data.destination,
+             "totalPrice":data.totalPrice
+ 
+        }) 
+     }
+    }
+}
+return{
+    all_data
+}
     
 }
 
 // CHALLENGE 10: Update a booking's status
 // RESTRICTION use Only for, while, and standard logic.
 function updateBookingStatus(bookingId, newStatus) {
-    
-    
+    for(data of Object.entries(spaceData)){
+   if(data[0]=="bookings"){
+     for(data of data[1]){
+        if(data.id == bookingId){
+            data.status=newStatus
+            return data
+        }
+        
+     }
+    }
+}
+   
 }
 
 
